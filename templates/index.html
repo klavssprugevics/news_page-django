@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+{% for post in posts %}
+<main class="container-fluid">
+    <div class="row bg-light p-5 rounded">
+        <div class="col">
+            <img src="{{post.thumbnail.url}}" style="width:400px;"/>
+        </div>
+        <div class="col-md-9 mt-0">
+            <h1 class="display-3">{{post.title}}</h1>
+            <h3><a class="" href="">{{post.category}}</a></h3>
+            <hr/>
+            <p class="lead">{{post.description}}</p>
+            <hr/>
+            <figcaption class="blockquote-footer text-end" style="font-size:25px;">{{post.author}} - {{post.date}}</figcaption>
+            <a class="btn btn-lg btn-primary" href="/docs/5.0/components/navbar/" role="button">Lasīt vairāk &raquo;</a>
+        </div>
+    </div>
+<br/>
+{% endfor %}
+</main>
+{% endblock content %}
