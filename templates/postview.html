@@ -24,8 +24,19 @@
         <hr class="mt-4"/>
         <p class="lead my-3" style="font-size:24px;">{{post.text}}</p>
     </div>
+</div>
+<div class="row m-3 p-4 rounded bg-light">
+    <div class="row pb-3">
+        <h3>Līdzīgi:</h3>
+    </div>
+    <hr/>
+    {% for post in related %}
 
-
+        <div class="col" style="display:block;margin:auto;">
+            <img src="{{post.thumbnail.url}}" href="{{post.get_absolute_url}}" style="width:400px;"/><br/>
+            <a class="lead" style="font-size:24px;" href="{{post.get_absolute_url}}" role="button">{{post.title}} &raquo;</a>
+        </div>
+    {% endfor %}
 
 </div>
 
