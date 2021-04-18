@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row m-3 p-4 rounded bg-light">
+        <div class="row mb-2">
+            <div class="col-md-6">
+                <div class="row g-0 border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-100 position-relative">
+                    <div class="col p-4 d-flex flex-column position-static">
+                        <strong class="d-inline-block text-primary" style="font-size:24px;">{{post.category}}</strong>
+                        <h3 class="my-2" style="font-size:36px;">{{post.title}}</h3>
+                        <div class="my-2 text-muted" style="font-size:18px;">{{post.date}}
+                            <hr/>
+                        </div>
+                    <p class="card-text mb-auto" style="font-size:18px;">{{post.description}}</p>
+                    <figcaption class="blockquote-footer text-end p-0 m-0" style="font-size:16px;">{{post.author}}</figcaption>
+                    </div>
+                <div class="col-auto d-none d-lg-block">
+            </div>
+        </div>
+        </div>
+        <div class="col" >
+            <img alt="Bootstrap Image Preview" src="{{post.thumbnail.url}}" class="rounded" style="height:300px;display:block;margin:auto;" />
+        </div>
+        <hr class="mt-4"/>
+        <p class="lead my-3" style="font-size:24px;">{{post.text}}</p>
+    </div>
+
+
+
+</div>
+
+{% endblock content%}

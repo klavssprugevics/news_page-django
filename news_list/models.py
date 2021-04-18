@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from django.utils.text import slugify 
+from django.urls import reverse
 
 class News(models.Model):
     CATEGORIES = [
@@ -25,10 +26,15 @@ class News(models.Model):
     thumbnail = models.ImageField(upload_to="images/", default="images/default.png")
     slug = models.SlugField(unique=True, blank=True, null=True)
 
+    # pirms saglabasanas - izveido slug no nosaukumu - unikals identifikators
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(News, self).save(*args, **kwargs)
 
-
+    # funkcija, kas atgriezis unikalo URL prieks katra post - varam to izmantot, kopeja saraksta, lai izveidotu 'lasit vairak' url
+    def get_absolute_url(self):
+        # url ir single un klat arguments ir slug
+        return reverse("news_list:single", args=[self.slug])
+    
     def __str__(self):
         return self.title
