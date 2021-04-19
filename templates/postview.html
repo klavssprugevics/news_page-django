@@ -23,6 +23,7 @@
         </div>
         <hr class="mt-4"/>
         <p class="lead my-3" style="font-size:24px;">{{post.text}}</p>
+        <a class="p-2 mt-3 fas fa-trash btn btn-danger" style="font-size:25px;" href="{% url 'news_list:delete' post.slug %}" ></a>
     </div>
 </div>
 <div class="row m-3 p-4 rounded bg-light">

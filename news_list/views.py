@@ -24,6 +24,11 @@ def post(request, slug):
     
     return render(request, 'postview.html', {'post':data, 'related':related_posts})
 
+def delete_post(request, post_id=None):
+    post_to_delete = News.objects.get(slug=post_id)
+    post_to_delete.delete()
+    return HttpResponseRedirect('/')
+
 def new_post(request):
 
     # need to process form data
