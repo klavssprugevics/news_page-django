@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
+from django.db.models import Q
 from .models import News
 from .forms import NewsForm, SearchForm
 
@@ -25,8 +26,10 @@ def all_posts(request):
 
             keyword = form.cleaned_data['keyword']
             if keyword != "":
-                #TODO keyword can be found in description or text as well
-                filtered_posts = News.objects.filter(title__contains=keyword)
+                filtered_posts = News.objects.filter(
+                    Q(title__contains=keyword)|
+                    Q(description__contains=keyword) |
+                    Q(text__contains=keyword))
 
             category = form.cleaned_data['category']           
             if category != "":
