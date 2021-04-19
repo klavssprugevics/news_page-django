@@ -1,7 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponseRedirect
 from .models import News
-from .forms import NewsForm
+from .forms import NewsForm, SearchForm
+
+from datetime import date
 
 # Create your views here.
 
@@ -13,6 +15,53 @@ def home(request):
     # Redirecto lietotaju uz lapu un klat iedod http req datus
     return render(request, "index.html", {"posts":data})
 
+def all_posts(request):
+
+    if request.method == 'POST':
+        form = SearchForm(request.POST)
+        if form.is_valid():
+            # If no filters are added- all of the posts will be displayed
+            filtered_posts = News.objects.all().order_by('-date')
+
+            keyword = form.cleaned_data['keyword']
+            if keyword != "":
+                #TODO keyword can be found in description or text as well
+                filtered_posts = News.objects.filter(title__contains=keyword)
+
+            category = form.cleaned_data['category']           
+            if category != "":
+                filtered_posts = filtered_posts.filter(category=category)
+
+            # Atlasa tos rakstus, kas ir noraditaja laika intervala
+            startDate = form.cleaned_data['startDate']
+            endDate = form.cleaned_data['endDate']
+
+            if startDate is None:
+                first_post = News.objects.all().order_by('date')[0]
+                first_post_date_obj = News._meta.get_field('date')
+                startDate = first_post_date_obj.value_from_object(first_post)
+                
+            if endDate is None:
+                endDate = date.today()
+
+            filtered_posts = filtered_posts.filter(date__date__range=[startDate, endDate]) 
+
+
+
+            # Izvelas kartosanas secibu
+            sort_order = form.cleaned_data['sort']
+            if sort_order == "byOldest":
+                filtered_posts = filtered_posts.order_by('date')
+            else:
+                filtered_posts = filtered_posts.order_by('-date')
+
+
+        return render(request, 'all_posts.html', {"posts":filtered_posts})
+    else:
+        all_posts = News.objects.all().order_by('-date')
+        return render(request, "all_posts.html", {"posts":all_posts})
+
+
 def post(request, slug):
     
     # No musu sql datubazes izpilda m query, kas ekvivalents - SELECT * FROM POST WHERE slug = this.slug;
@@ -22,9 +71,10 @@ def post(request, slug):
     related_posts = News.objects.filter(category=data.category).order_by('-date').exclude(slug=slug)[:3]
 
     
-    return render(request, 'postview.html', {'post':data, 'related':related_posts})
+    return render(request, 'post_view.html', {'post':data, 'related':related_posts})
 
 def delete_post(request, post_id=None):
+
     post_to_delete = News.objects.get(slug=post_id)
     post_to_delete.delete()
     return HttpResponseRedirect('/')

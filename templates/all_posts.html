@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block content %}
+<form class="container-fluid col-auto card card-sm m-4" method="post">
+    {% csrf_token %}
+    <div class="card-body row align-items-center">
+        <div class="col-auto">
+            <i class="fas fa-search h4 text-body"></i>
+        </div>
+        <div class="col-auto">
+            <input id="id_keyword" name="keyword" class="form-control form-control-lg form-control-borderless" type="text" placeholder="Atslēgvārds" maxlength="20">
+        </div>
+        <div class="col-auto">
+            <select id="id_category" name="category" class="custom-select">
+                <option value="" selected>Kategorija</option>
+                <option value="Sport">Sports</option>
+                <option value="Culture">Kultūra</option>
+                <option value="Technology">Tehnoloģijas</option>
+                <option value="Other">Cits</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <select id="id_sort" name="sort" class="custom-select">
+                <option value="" selected>Kārtošana</option>
+                <option value="byNewest">Jaunākie vispirms</option>
+                <option value="byOldest">Vecākie vispirms</option>
+            </select>
+        </div>
+        <div class="col-auto">
+            <label>Sākot no:</label>
+            <input id="id_startDate" name="startDate" type="date">
+            <label>Līdz:</label>
+            <input id="id_endDate" name="endDate" type="date">
+            <button type="submit" class="btn btn-dark mx-3" >Aziet</button>
+        </div>
+    </div>
+</form>
+{% for post in posts %}
+<main class="container-fluid">
+    <div class="row bg-light p-5 rounded">
+        <div class="col">
+            <img src="{{post.thumbnail.url}}" style="width:400px;"/>
+        </div>
+        <div class="col-md-9 mt-0">
+            <h1 class="display-3">{{post.title}}</h1>
+            <h3><a class="" href="">{{post.category}}</a></h3>
+            <hr/>
+            <p class="lead">{{post.description}}</p>
+            <hr/>
+            <figcaption class="blockquote-footer text-end" style="font-size:25px;">{{post.author}} - {{post.date}}</figcaption>
+            <a class="btn btn-lg btn-primary" href="{{post.get_absolute_url}}" role="button">Lasīt vairāk &raquo;</a>
+        </div>
+    </div>
+<br/>
+{% endfor %}
+</main>
+{% endblock content %}
