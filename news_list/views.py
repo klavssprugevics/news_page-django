@@ -1,6 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponseRedirect
 from .models import News
-
+from .forms import NewsForm
 
 # Create your views here.
 
@@ -22,3 +23,24 @@ def post(request, slug):
 
     
     return render(request, 'postview.html', {'post':data, 'related':related_posts})
+
+def new_post(request):
+
+    # need to process form data
+    if request.method == 'POST':
+
+        # creates form instance and populates it
+        post = NewsForm(request.POST, request.FILES)
+
+        # If valid, redirect user
+        if post.is_valid():
+            post.save()
+            
+            # TODO: Redirect to all posts
+            return HttpResponseRedirect('/')
+    # if user visits site (GET METHOD) - just render a blank form
+    else:
+        post = NewsForm()
+
+    
+    return render(request, 'add_post.html', {'form':post})

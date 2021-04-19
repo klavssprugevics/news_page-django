@@ -11,7 +11,7 @@ class News(models.Model):
         ('Other', 'Other')
     ]
 
-    title = models.CharField(max_length=155, default="Title")
+    title = models.CharField(max_length=155, default="Title", unique=True)
     author = models.CharField(max_length=60, default="Author")
     date = models.DateTimeField(default=timezone.now)
 

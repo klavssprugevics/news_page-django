@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{form.as_p}}
+    {% comment %} {{form.non_field_errors}}
+    <div>
+        {{form.title.errors}}
+        <label for="{{form.title.id_for_label}}">Nosaukums:</label>
+        {{form.title}}
+    </div>
+        <div>
+        {{form.author.errors}}
+        <label for="{{form.author.id_for_label}}">Autors:</label>
+        {{form.author}}
+    </div>
+    <div>
+        {{form.thumbnail.errors}}
+        <label for="{{form.thumbnail.id_for_label}}">Attēls:</label>
+        {{form.thumbnail}}
+    </div>
+    <div>
+        {{form.category.errors}}
+        <label for="{{form.category.id_for_label}}">Kategorija:</label><br>
+        {{form.category}}
+    </div>
+    <div>
+        {{form.description.errors}}
+        <label for="{{form.description.id_for_label}}">Apraksts:</label><br>
+        {{form.description}}
+    </div>
+    <div>
+        {{form.text.errors}}
+        <label for="{{form.text.id_for_label}}">Teksts:</label><br>
+        {{form.text}}
+    </div> {% endcomment %}
+    <button type="submit">Save</button>
+</form>
+{% endblock content %}
