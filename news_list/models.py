@@ -4,6 +4,7 @@ from django.utils.text import slugify
 from django.urls import reverse
 
 class News(models.Model):
+
     CATEGORIES = [
         ('Sport', 'Sports'),
         ('Technology', 'Technology'),
@@ -26,7 +27,7 @@ class News(models.Model):
     thumbnail = models.ImageField(upload_to="images/", default="images/default.png")
     slug = models.SlugField(unique=True, blank=True, null=True)
 
-    # pirms saglabasanas - izveido slug no nosaukumu - unikals identifikators
+    # pirms saglabasanas - izveido slug no nosaukuma - unikals identifikators
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
         super(News, self).save(*args, **kwargs)
