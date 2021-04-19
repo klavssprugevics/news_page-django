@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% comment %} {{form.as_p}} {% endcomment %}
+    <div class="container-fluid form-group text-center lead">
+        <h2 id="specials" class="display-4 row justify-content-center m-2" >Labot rakstu:</h2>
+        {{form.non_field_errors}}
+        <div class="m-3 col-xl-12">
+            <label for="{{form.title.id_for_label}}" class="mb-3" style="font-size:30px;">Nosaukums:</label><br>
+            {{form.title}}<br>
+            {% if form.title.errors %}
+                <div class="badge bg-danger pb-2 pt-3 m-2 px-auto">
+                    {{ form.title.errors }}
+                </div>
+            {% endif %}
+        </div>
+        <div class="m-3 col-xl-12">
+            {{form.author.errors}}
+            <label for="{{form.author.id_for_label}}" class="mb-3" style="font-size:30px;">Autors:</label><br>
+            {{form.author}}
+        </div>
+        <div class="m-3 col-xl-12">
+            {{form.thumbnail.errors}}
+            <label for="{{form.thumbnail.id_for_label}}"class="m-3" style="font-size:30px;">Attēls:</label>
+            {{form.thumbnail}}
+        </div>
+        <div class="m-3 col-xl-12">
+            {{form.category.errors}}
+            <label for="{{form.category.id_for_label}}" class="mb-3" style="font-size:30px;">Kategorija:</label>
+            {{form.category}}
+        </div>
+        <div class="m-3 col-xl-12">
+            {{form.description.errors}}
+            <label for="{{form.description.id_for_label}}" class="mb-3" style="font-size:30px;resize:none;">Apraksts:</label><br>
+            {{form.description}}
+        </div>
+        <div class="m-3 col-xl-12">
+            {{form.text.errors}}
+            <label for="{{form.text.id_for_label}}"class="mb-3" style="font-size:30px;resize:none;">Teksts:</label><br>
+            {{form.text}}
+        </div>
+        <button type="submit" class="btn btn-primary m-3 p-2 w-25">Save</button>
+    </div>
+
+</form>
+{% endblock content %}

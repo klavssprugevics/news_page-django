@@ -29,6 +29,20 @@ def delete_post(request, post_id=None):
     post_to_delete.delete()
     return HttpResponseRedirect('/')
 
+
+def edit_post(request, post_id=None):
+    news_post = News.objects.get(slug=post_id)
+    post = NewsForm(instance=news_post)
+
+    if request.method == 'POST':
+        post = NewsForm(request.POST, request.FILES, instance=news_post)
+        if post.is_valid():
+            post.save()
+            return HttpResponseRedirect('/')
+
+    return render(request, 'edit_post.html', {'form':post})
+
+
 def new_post(request):
 
     # need to process form data
@@ -41,7 +55,6 @@ def new_post(request):
         if post.is_valid():
             post.save()
             
-            # TODO: Redirect to all posts
             return HttpResponseRedirect('/')
     # if user visits site (GET METHOD) - just render a blank form
     else:
