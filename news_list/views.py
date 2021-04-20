@@ -14,9 +14,9 @@ def home(request):
     # No musu sql datubazes izpildam query, kas ekvivalents - SELECT * FROM POST;
     data = News.objects.all().order_by('-date')[:5]
 
+
     # Redirecto lietotaju uz lapu un klat iedod http req datus
     return render(request, "index.html", {"posts":data})
-
 
 # Visu rakstu skats ar filtraciju
 def all_posts(request):

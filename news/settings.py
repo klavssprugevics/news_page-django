@@ -11,29 +11,31 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 """
 
 from pathlib import Path
+import sys
 import json
-import os
 from django.core.exceptions import ImproperlyConfigured
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
-
-with open(os.path.join(BASE_DIR, 'secrets.json')) as secrets_file:
+with open('secrets.json') as secrets_file:
     secrets = json.load(secrets_file)
-
+    
 def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
     except KeyError:
         raise ImproperlyConfigured("Set the {} setting".format(setting))
+        
+# Quick-start development settings - unsuitable for production
+# See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
+
+# SECURITY WARNING: keep the secret key used in production secret!
+
 
 SECRET_KEY = get_secret('SECRET_KEY')
+WEATHER_KEY = get_secret('WEATHER_API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -76,6 +78,9 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                # custom context processors
+                'news_list.my_context_processors.time',
+                'news_list.my_context_processors.weather',
             ],
         },
     },

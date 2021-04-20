@@ -20,6 +20,12 @@
                     <li><a href="{% url 'news_list:all_posts' %}" class="nav-link link-dark pt-4"><h2>Visi raksti</h2></a></li>
                     <li><a href="{% url 'news_list:new_post' %}" class="nav-link link-dark pt-4"><h2>Pievienot rakstu</h2></a></li>
                 </ul>
+                <ul class="nav align-items-center ms-auto me-auto">
+                    <li class="nav-link link-dark pt-4"><h2>{{time}}</h2></li>
+                    <li class="nav-link link-dark pt-4"><h2>{{weather.location.name}}</h2></li>
+                    <li class="nav-link link-dark pt-4 p-0 m-0"><img src="{{weather.current.condition.icon}}"/></li>
+                    <li class="nav-link link-dark pt-4"><h2>{{weather.current.temp_c}}°C</h2></li>
+                </ul>
             </div>
             <hr/>
         </div>
